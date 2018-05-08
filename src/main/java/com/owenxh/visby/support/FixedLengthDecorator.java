@@ -17,18 +17,18 @@ public class FixedLengthDecorator implements SequenceDecorateStrategy {
     /**
      * 填充的字符
      */
-    protected Character padding = DEFAULT_PADDING;
+    protected Character padding;
 
     /**
      * 序列号长度
      */
     protected int limitedLength;
 
-    public FixedLengthDecorator(int seqLength) {
-        this(null, seqLength);
+    public FixedLengthDecorator(int limitedLength) {
+        this(limitedLength, null);
     }
 
-    public FixedLengthDecorator(Character padding, int limitedLength) {
+    public FixedLengthDecorator(int limitedLength, Character padding) {
         Assert.isPositive(limitedLength, "[limitedLength] must be positive");
 
         this.padding = forPadding(padding);
@@ -52,8 +52,7 @@ public class FixedLengthDecorator implements SequenceDecorateStrategy {
         int realLength = lengthFrom(sequence);
 
         if (realLength > limitedLength) {
-            throw new IllegalArgumentException("[sequence] decorate failed, the length of sequence  "
-                    + realLength + " is large than limited " + limitedLength);
+            return String.valueOf(sequence).substring(realLength - limitedLength);
         }
 
         if (realLength < limitedLength) {

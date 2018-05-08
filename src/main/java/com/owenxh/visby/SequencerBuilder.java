@@ -1,6 +1,11 @@
 package com.owenxh.visby;
 
+import com.owenxh.visby.support.CheckCodeDecorator;
+import com.owenxh.visby.support.FixedLengthDecorator;
+import com.owenxh.visby.support.SequenceDecorateStrategy;
 import com.owenxh.visby.util.Assert;
+
+import java.io.Serializable;
 
 /**
  * {@link Sequencer} builder
@@ -10,21 +15,42 @@ import com.owenxh.visby.util.Assert;
  */
 public class SequencerBuilder {
 
-    private CombinableSequencer sequencer;
+    private CombinableSequencerSupport delegated;
 
     public SequencerBuilder() {
-        this.sequencer = new CombinableSequencerSupport();
+        this.delegated = new CombinableSequencerSupport();
     }
 
     public SequencerBuilder append(Sequencer combined) {
-        Assert.notNull(sequencer, "[sequencer] must not be null");
+        Assert.notNull(delegated, "[delegated] must not be null");
 
-        this.sequencer.with(combined);
+        this.delegated.with(combined);
 
         return this;
     }
 
+    public SequencerBuilder append(Sequencer combined, int seqLength) {
+        this.delegated.with(new DelegatableSequencer(combined, new FixedLengthDecorator(seqLength)));
+
+        return this;
+    }
+
+    public SequencerBuilder append(CheckCodeDecorator decorator, int checkCodeLength) {
+        Sequencer sequencer = new DelegatableSequencer(CombinableSequencerSupport.from(this.delegated), (sequence) -> {
+
+            Serializable checkCode = decorator.decorate(sequence);
+            return combination(sequence, new FixedLengthDecorator(checkCodeLength).decorate(checkCode));
+        });
+
+        this.delegated.clear().with(sequencer);
+        return this;
+    }
+
+    private String combination(Serializable sequence, Serializable checkCode) {
+        return String.valueOf(sequence) + String.valueOf(checkCode);
+    }
+
     public Sequencer build() {
-        return sequencer;
+        return delegated;
     }
 }

@@ -32,7 +32,7 @@ public class IntIncrementSequencer extends IncrementableSequencer<Integer> imple
     }
 
     @Override
-    protected Integer next0() throws SequenceExhaustedException {
+    protected Integer getAndIncreaseStep() throws SequenceExhaustedException {
         int next = internalSequencer.getAndAdd(getIncrementStep());
 
         if (NumberUtils.isNegative(next)) {

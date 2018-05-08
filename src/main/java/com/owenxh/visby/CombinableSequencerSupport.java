@@ -19,6 +19,15 @@ public class CombinableSequencerSupport implements CombinableSequencer {
      */
     private Collection<Sequencer> seqSection = new ArrayList<>();
 
+    public CombinableSequencerSupport() {}
+
+    public static final CombinableSequencerSupport from(CombinableSequencerSupport sourceSequencer) {
+        CombinableSequencerSupport destSequencer = new CombinableSequencerSupport();
+        destSequencer.with(sourceSequencer.getSeqSection());
+
+        return destSequencer;
+    }
+
     /**
      * {@link #seqSection} getter 方法
      * @return
@@ -28,10 +37,24 @@ public class CombinableSequencerSupport implements CombinableSequencer {
     }
 
     @Override
-    public Sequencer with(Sequencer combined) {
+    public CombinableSequencer with(Sequencer combined) {
         Assert.notNull(combined, "[combined] must not be null");
 
         seqSection.add(combined);
+        return this;
+    }
+
+    @Override
+    public CombinableSequencer with(Collection<Sequencer> combined) {
+        Assert.notNull(combined, "[combined] must not be null");
+
+        seqSection.addAll(combined);
+        return this;
+    }
+
+    @Override
+    public CombinableSequencer clear() {
+        seqSection.clear();
         return this;
     }
 

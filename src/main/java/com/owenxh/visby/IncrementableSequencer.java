@@ -8,7 +8,7 @@ import com.owenxh.visby.util.Assert;
  * @author <a href="mailto:sowen1023@gmail.com">Owen.Yuan</a>
  * @since 2018/5/8
  */
-public abstract class IncrementableSequencer<S extends Number> implements Sequencer {
+public abstract class IncrementableSequencer<S extends Number> extends FormatSequencerSupport implements Sequencer {
 
     /**
      * 最小序列号
@@ -74,13 +74,18 @@ public abstract class IncrementableSequencer<S extends Number> implements Sequen
     }
 
     @Override
-    public synchronized S next() {
+    protected synchronized S next0() {
         try {
-            return next0();
+            return getAndIncreaseStep();
         } catch (SequenceExhaustedException e) {
             return nextSequenceIfExhausted(e);
         }
     }
+
+    /**
+     * 获取下一个流水号并增加步长
+     */
+    protected abstract S getAndIncreaseStep();
 
     /**
      * 序列号用尽时，将触发该方法
@@ -97,13 +102,6 @@ public abstract class IncrementableSequencer<S extends Number> implements Sequen
 
         return next0();
     }
-
-    /**
-     * 获取下一个流水号
-     * @return 下一个流水号
-     * @throws SequenceExhaustedException 当序列号用尽时抛出
-     */
-    protected abstract S next0() throws SequenceExhaustedException;
 
     /**
      * 重置序列号，从 {@link #minSequence} 重新开始计算

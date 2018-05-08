@@ -1,7 +1,5 @@
 package com.owenxh.visby;
 
-import com.owenxh.visby.support.FixedLengthDecorator;
-
 /**
  * {@link Sequencer} 测试类
  *
@@ -13,14 +11,13 @@ public class TestSequencer {
 
     public static void main(String[] args) {
         Sequencer sequencer = new SequencerBuilder()
-                .append(FixedSequencer.fixedStringSequencer("A-"))
-                .append(new FormatableSequencer(new IntIncrementSequencer(Integer.MAX_VALUE), new FixedLengthDecorator(10)))
-                .append(FixedSequencer.fixedCharSequencer('-'))
-                .append(new IntIncrementSequencer(0))
+                .append(new DateSequencer())
+                .append(new IntIncrementSequencer(Integer.MAX_VALUE), 10)
+                .append(FixedSequencer.fixedCharSequencer('A'))
+                .append(new SimpleCheckCodeSequencer(), 3)
                 .build();
 
-
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             System.out.println(sequencer.next());
         }
     }
