@@ -47,10 +47,7 @@ public class CombinableSequencerSupport implements CombinableSequencer {
     private Serializable next0() {
         StringBuilder sequenceBuilder = new StringBuilder();
 
-        seqSection.stream().forEach(sequencer -> {
-            Serializable next = sequencer.next();
-            sequenceBuilder.append(next);
-        });
+        seqSection.stream().forEach(sequencer -> sequenceBuilder.append(sequencer.next()));
         return sequenceBuilder.toString();
     }
 }
