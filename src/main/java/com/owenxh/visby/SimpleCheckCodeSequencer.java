@@ -14,7 +14,7 @@ public class SimpleCheckCodeSequencer implements CheckCodeDecorator {
 
     @Override
     public Serializable decorate(Serializable sequence) {
-        return String.valueOf(sequence);
+        return decorate0(String.valueOf(sequence));
     }
 
     public Serializable decorate0(String sequence) {

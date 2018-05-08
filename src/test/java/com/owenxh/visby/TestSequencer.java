@@ -12,8 +12,8 @@ public class TestSequencer {
     public static void main(String[] args) {
         Sequencer sequencer = new SequencerBuilder()
                 .append(new DateSequencer())
-                .append(new IntIncrementSequencer(Integer.MAX_VALUE), 10)
-                .append(FixedSequencer.fixedCharSequencer('A'))
+                .append(FixedSequencer.fixedCharSequencer('X'))
+                .append(new IntIncrementSequencer(), 10)
                 .append(new SimpleCheckCodeSequencer(), 3)
                 .build();
 
