@@ -1,6 +1,4 @@
-package com.owenxh.visby;
-
-import com.owenxh.visby.support.CheckCodeDecorator;
+package com.owenxh.visby.support;
 
 import java.io.Serializable;
 
@@ -10,7 +8,7 @@ import java.io.Serializable;
  * @author <a href="mailto:sowen1023@gmail.com">Owen.Yuan</a>
  * @since 2018/5/8
  */
-public class SimpleCheckCodeSequencer implements CheckCodeDecorator {
+public class SimpleCheckCodeDecorator implements CheckCodeDecorator {
 
     @Override
     public Serializable decorate(Serializable sequence) {

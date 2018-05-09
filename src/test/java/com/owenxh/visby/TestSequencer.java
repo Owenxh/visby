@@ -1,5 +1,7 @@
 package com.owenxh.visby;
 
+import com.owenxh.visby.support.SimpleCheckCodeDecorator;
+
 /**
  * {@link Sequencer} 测试类
  *
@@ -10,12 +12,15 @@ public class TestSequencer {
 
 
     public static void main(String[] args) {
+        testSequenceBuilder();
+    }
+
+    private static void testSequenceBuilder() {
         Sequencer sequencer = new SequencerBuilder()
                 .append(new DateSequencer())
                 .append(FixedSequencer.fixedCharSequencer('X'))
                 .append(new IntIncrementSequencer(), 10)
-                .append(new SimpleCheckCodeSequencer(), 3)
-                .append(new DateSequencer(), 2)
+                .append(new SimpleCheckCodeDecorator(), 3)
                 .build();
 
         for (int i = 0; i < 20; i++) {
