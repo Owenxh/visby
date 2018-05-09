@@ -2,7 +2,6 @@ package com.owenxh.visby;
 
 import com.owenxh.visby.support.CheckCodeDecorator;
 import com.owenxh.visby.support.FixedLengthDecorator;
-import com.owenxh.visby.support.SequenceDecorateStrategy;
 import com.owenxh.visby.util.Assert;
 
 import java.io.Serializable;

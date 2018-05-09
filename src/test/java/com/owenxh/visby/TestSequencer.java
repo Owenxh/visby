@@ -15,6 +15,7 @@ public class TestSequencer {
                 .append(FixedSequencer.fixedCharSequencer('X'))
                 .append(new IntIncrementSequencer(), 10)
                 .append(new SimpleCheckCodeSequencer(), 3)
+                .append(new DateSequencer(), 2)
                 .build();
 
         for (int i = 0; i < 20; i++) {
