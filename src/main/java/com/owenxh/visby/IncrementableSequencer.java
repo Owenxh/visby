@@ -8,7 +8,7 @@ import com.owenxh.visby.util.Assert;
  * @author <a href="mailto:sowen1023@gmail.com">Owen.Yuan</a>
  * @since 2018/5/8
  */
-public abstract class IncrementableSequencer<S extends Number> extends FormatSequencerSupport implements Sequencer {
+public abstract class IncrementableSequencer<S extends Number> implements Sequencer {
 
     /**
      * 最小序列号
@@ -74,7 +74,7 @@ public abstract class IncrementableSequencer<S extends Number> extends FormatSeq
     }
 
     @Override
-    protected synchronized S next0() {
+    public S next() {
         try {
             return getAndIncreaseStep();
         } catch (SequenceExhaustedException e) {
@@ -100,7 +100,7 @@ public abstract class IncrementableSequencer<S extends Number> extends FormatSeq
 
         reset();
 
-        return next0();
+        return getAndIncreaseStep();
     }
 
     /**

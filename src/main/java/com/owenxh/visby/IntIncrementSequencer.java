@@ -46,5 +46,4 @@ public class IntIncrementSequencer extends IncrementableSequencer<Integer> imple
     protected void reset() {
         this.internalSequencer.set(getMinSequence());
     }
-
 }

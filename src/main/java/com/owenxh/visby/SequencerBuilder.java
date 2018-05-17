@@ -29,13 +29,13 @@ public class SequencerBuilder {
     }
 
     public SequencerBuilder append(Sequencer combined, int seqLength) {
-        this.delegated.with(new DelegatableSequencer(combined, new FixedLengthDecorator(seqLength)));
+        this.delegated.with(new FormattableSequencer(combined, new FixedLengthDecorator(seqLength)));
 
         return this;
     }
 
     public SequencerBuilder append(CheckCodeDecorator decorator, int checkCodeLength) {
-        Sequencer sequencer = new DelegatableSequencer(CombinableSequencerSupport.from(this.delegated), (sequence) -> {
+        Sequencer sequencer = new FormattableSequencer(CombinableSequencerSupport.from(this.delegated), (sequence) -> {
 
             Serializable checkCode = decorator.decorate(sequence);
             return combination(sequence, new FixedLengthDecorator(checkCodeLength).decorate(checkCode));
